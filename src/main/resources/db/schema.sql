@@ -8,3 +8,9 @@ CREATE TABLE habits (
     modified_at VARCHAR(100) NOT NULL,
     user_id VARCHAR(100)
 );
+
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    created_at VARCHAR(100) NOT NULL,
+);
