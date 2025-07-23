@@ -16,7 +16,7 @@ data class Habit(
  var name: String,
  var startTime: Int,
  var duration: Int,
- var createdAt: LocalDateTime,
- var modifiedAt: LocalDateTime,
+ var createdAt: String,
+ var modifiedAt: String,
  var userId: String? = null,
 )
