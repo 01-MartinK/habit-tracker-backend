@@ -24,7 +24,7 @@ class HabitService(val repository: HabitRepository) {
                 createdAt = habit.createdAt,
                 modifiedAt = LocalDateTime.now(),
             ))
-            } else throw ChangeSetPersister.NotFoundException();
+            } else throw ChangeSetPersister.NotFoundException()
         }
     fun deleteHabit(id: Long) = repository.deleteById(id)
 }
