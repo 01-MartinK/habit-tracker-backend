@@ -22,7 +22,7 @@ class HabitService(val repository: HabitRepository) {
                 startTime = habit.startTime,
                 duration = habit.duration,
                 createdAt = habit.createdAt,
-                modifiedAt = LocalDateTime.now(),
+                modifiedAt = LocalDateTime.now().toString(),
             ))
             } else throw ChangeSetPersister.NotFoundException()
         }

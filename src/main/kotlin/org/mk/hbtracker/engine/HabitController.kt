@@ -25,8 +25,8 @@ public class HabitController(private val service: HabitService) {
         name = body.name,
         startTime = body.startTime,
         duration = body.duration,
-        createdAt = LocalDateTime.now(),
-        modifiedAt = LocalDateTime.now()
+        createdAt = LocalDateTime.now().toString(),
+        modifiedAt = LocalDateTime.now().toString(),
     ))
 
     @PutMapping("/{id}")
@@ -35,8 +35,8 @@ public class HabitController(private val service: HabitService) {
         name = body.name,
         startTime = body.startTime,
         duration = body.duration,
-        createdAt = LocalDateTime.now(),
-        modifiedAt = LocalDateTime.now()
+        createdAt = LocalDateTime.now().toString(),
+        modifiedAt = LocalDateTime.now().toString()
     ))
 
     @DeleteMapping("/{id}")
