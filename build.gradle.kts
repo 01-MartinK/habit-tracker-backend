@@ -4,7 +4,6 @@ plugins {
 	id("org.springframework.boot") version "3.5.3"
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("plugin.jpa") version "1.9.25"
-	kotlin("plugin.serialization") version "1.9.25"
 }
 
 group = "org.mk"
@@ -26,8 +25,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation("org.xerial:sqlite-jdbc:3.49.1.0")
+	implementation("org.hibernate.orm:hibernate-community-dialects")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
