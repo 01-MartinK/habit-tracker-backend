@@ -7,8 +7,15 @@ data class CreateHabitRequest(
 )
 
 data class UpdateHabitRequest(
-    val id: Long,
     val name: String,
     val startTime: Int,
     val duration: Int,
+)
+
+data class CreateUserRequest(
+    val username: String,
+)
+
+data class UpdateUserRequest(
+    val username: String
 )
