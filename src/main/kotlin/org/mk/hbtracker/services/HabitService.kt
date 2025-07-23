@@ -15,16 +15,19 @@ class HabitService(val repository: HabitRepository) {
     fun createHabit(habit: Habit) = repository.save<Habit>(habit)
 
     fun updateHabit(id: Long, habit: Habit): Habit {
-        return if (repository.existsById(id)){
-            repository.save<Habit>(Habit(
-                id = id,
-                name = habit.name,
-                startTime = habit.startTime,
-                duration = habit.duration,
-                createdAt = habit.createdAt,
-                modifiedAt = LocalDateTime.now().toString(),
-            ))
-            } else throw ChangeSetPersister.NotFoundException()
-        }
+        return if (repository.existsById(id)) {
+            repository.save<Habit>(
+                Habit(
+                    id = id,
+                    name = habit.name,
+                    startTime = habit.startTime,
+                    duration = habit.duration,
+                    createdAt = habit.createdAt,
+                    modifiedAt = LocalDateTime.now().toString(),
+                )
+            )
+        } else throw ChangeSetPersister.NotFoundException()
+    }
+
     fun deleteHabit(id: Long) = repository.deleteById(id)
 }
