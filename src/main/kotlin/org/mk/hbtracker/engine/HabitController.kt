@@ -7,6 +7,7 @@ import org.mk.hbtracker.domain.UpdateHabitRequest
 import org.mk.hbtracker.services.HabitService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -28,9 +29,9 @@ public class HabitController(private val service: HabitService) {
         modifiedAt = LocalDateTime.now()
     ))
 
-    @PutMapping("/")
-    fun updateHabit(@RequestBody body: UpdateHabitRequest): Habit = service.updateHabit(body.id, Habit(
-        id = body.id,
+    @PutMapping("/{id}")
+    fun updateHabit(@PathVariable id: Long, @RequestBody body: UpdateHabitRequest): Habit = service.updateHabit(id, Habit(
+        id = id,
         name = body.name,
         startTime = body.startTime,
         duration = body.duration,
@@ -38,6 +39,6 @@ public class HabitController(private val service: HabitService) {
         modifiedAt = LocalDateTime.now()
     ))
 
-    @DeleteMapping("/")
-    fun deleteHabit(id: Long) = service.deleteHabit(id)
+    @DeleteMapping("/{id}")
+    fun deleteHabit(@PathVariable id: Long) = service.deleteHabit(id)
 }
