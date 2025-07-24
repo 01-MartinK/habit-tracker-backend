@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController(private val service: UserService) {
+class UserController(private val service: UserService) {
     @GetMapping("/")
     fun getUsers(): List<User> = service.getAllUsers()
 

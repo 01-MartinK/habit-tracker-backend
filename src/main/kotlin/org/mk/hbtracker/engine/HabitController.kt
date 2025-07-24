@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/habits")
-public class HabitController(private val service: HabitService) {
+class HabitController(private val service: HabitService) {
     @GetMapping("/")
     fun getHabits(): List<Habit> = service.getAllHabits()
 
