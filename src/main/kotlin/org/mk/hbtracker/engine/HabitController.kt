@@ -21,6 +21,7 @@ public class HabitController(private val service: HabitService) {
             duration = body.duration,
             createdAt = LocalDateTime.now().toString(),
             modifiedAt = LocalDateTime.now().toString(),
+            userId = body.userId
         )
     )
 
@@ -32,7 +33,8 @@ public class HabitController(private val service: HabitService) {
             startTime = body.startTime,
             duration = body.duration,
             createdAt = LocalDateTime.now().toString(),
-            modifiedAt = LocalDateTime.now().toString()
+            modifiedAt = LocalDateTime.now().toString(),
+            userId = body.userId,
         )
     )
 
