@@ -30,5 +30,5 @@ class UserController(private val service: UserService) {
     )
 
     @DeleteMapping("/{id}")
-    fun deleteHabit(@PathVariable id: Long) = service.deleteUser(id)
+    fun deleteUser(@PathVariable id: Long) = service.deleteUser(id)
 }

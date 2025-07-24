@@ -21,3 +21,9 @@ data class CreateUserRequest(
 data class UpdateUserRequest(
     val username: String
 )
+
+data class CreateAccountRequest(
+    val username: String,
+    val email: String,
+    val password: String
+)

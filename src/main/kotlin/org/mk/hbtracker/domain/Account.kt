@@ -11,5 +11,6 @@ data class Account(
     val email: String,
     val password: String,
     val lastLogin: String,
+    val createdAt: String,
     val userId: Long,
 )
