@@ -6,7 +6,7 @@ CREATE TABLE habits (
     duration INT NOT NULL,
     created_at VARCHAR(100) NOT NULL,
     modified_at VARCHAR(100) NOT NULL,
-    user_id VARCHAR(100)
+    user_id INT
 );
 
 CREATE TABLE users (

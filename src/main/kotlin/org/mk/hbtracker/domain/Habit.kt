@@ -13,5 +13,5 @@ data class Habit(
     var duration: Int,
     var createdAt: String,
     var modifiedAt: String,
-    var userId: String? = null,
+    var userId: Long,
 )

@@ -24,6 +24,7 @@ class HabitService(val repository: HabitRepository) {
                     duration = habit.duration,
                     createdAt = habit.createdAt,
                     modifiedAt = LocalDateTime.now().toString(),
+                    userId = habit.userId,
                 )
             )
         } else throw ChangeSetPersister.NotFoundException()
