@@ -27,3 +27,8 @@ data class CreateAccountRequest(
     val email: String,
     val password: String
 )
+
+data class AccountLoginRequest(
+    val email: String,
+    val password: String
+)
