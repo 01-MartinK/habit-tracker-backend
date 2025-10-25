@@ -2,35 +2,34 @@ package com.habit.model
 
 import com.habit.domain.CreateHabitAction
 import com.habit.domain.Habit
-import com.habit.domain.UpdateHabitAction
-import com.habit.model.HabitRepository
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.UUID
 
 class FakeHabitRepository : HabitRepository {
     private val habits = mutableListOf<Habit>(
-        Habit(0,
+        Habit(UUID.randomUUID(),
             "person-running",
             "Workout",
             "6:00 - 2h",
             SimpleDateFormat(LocalDate.now().toString()),
             SimpleDateFormat(LocalDate.now().toString())
         ),
-        Habit(1,
+        Habit(UUID.randomUUID(),
             "moon",
             "Sleep",
             "22:00 - 6:00",
             SimpleDateFormat(LocalDate.now().toString()),
             SimpleDateFormat(LocalDate.now().toString())
         ),
-        Habit(2,
+        Habit(UUID.randomUUID(),
             "person-praying",
             "Yoga",
             "16:00 - 1h",
             SimpleDateFormat(LocalDate.now().toString()),
             SimpleDateFormat(LocalDate.now().toString())
         ),
-        Habit(3,
+        Habit(UUID.randomUUID(),
             "person-running",
             "Mouth exercises",
             "8:00 - 10min",
@@ -40,9 +39,9 @@ class FakeHabitRepository : HabitRepository {
     )
 
     override fun allHabits(): List<Habit> = habits
-    override fun getHabitById(id: Long): Habit? = habits.find { it.id == id }
-    override fun createHabit(id: Long, action: CreateHabitAction): Habit {
-        val habit: Habit = Habit(0,
+    override fun getHabitById(id: String): Habit? = habits.find { it.id == UUID.fromString(id) }
+    override fun createHabit(action: CreateHabitAction): Habit {
+        val habit = Habit(UUID.randomUUID(),
             action.icon,
             action.title,
             action.description,
@@ -50,18 +49,33 @@ class FakeHabitRepository : HabitRepository {
             SimpleDateFormat(LocalDate.now().toString())
         )
 
-        habits.add(habit);
+        habits.add(habit)
 
         return habit
     }
 
-    override fun updateHabit(id: Long, action: UpdateHabitAction): Habit? {
-        val habit: Habit? = habits.find { it.id == id }
+    override fun updateHabit(id: String, action: CreateHabitAction): Habit? {
+        val oldHabit: Habit? = habits.find { it.id == UUID.fromString(id) }
 
-        return habit;
+        if (oldHabit != null) {
+            val habit = Habit(
+                id = oldHabit.id,
+                icon = action.icon,
+                title = action.title,
+                description = action.description,
+                createdAt = oldHabit.createdAt,
+                modifiedAt = SimpleDateFormat(LocalDate.now().toString()),
+            )
+
+            habits.find { it.id == UUID.fromString(id) } == habit
+
+            return habit;
+        }
+
+        return null;
     }
 
-    override fun deleteHabit(id: Long): Boolean {
-        TODO("Not yet implemented")
+    override fun deleteHabit(id: String): Boolean {
+        return habits.removeIf { it.id == UUID.fromString(id) }
     }
 }
