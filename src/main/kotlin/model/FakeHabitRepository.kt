@@ -69,10 +69,10 @@ class FakeHabitRepository : HabitRepository {
 
             habits.find { it.id == UUID.fromString(id) } == habit
 
-            return habit;
+            return habit
         }
 
-        return null;
+        return null
     }
 
     override fun deleteHabit(id: String): Boolean {

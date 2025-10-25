@@ -12,7 +12,7 @@ fun Route.habitRoute(
     fakeHabitRepository: FakeHabitRepository
 ) {
     get {
-        val habits = fakeHabitRepository.allHabits();
+        val habits = fakeHabitRepository.allHabits()
 
         call.respond(
             message = habits
@@ -34,7 +34,7 @@ fun Route.habitRoute(
     post {
         val params = call.receiveParameters()
 
-        val action = params.toCreateAction() ?: return@post call.respond(HttpStatusCode.BadRequest);
+        val action = params.toCreateAction() ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
             message = fakeHabitRepository.createHabit(action)
