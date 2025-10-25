@@ -1,7 +1,6 @@
 package com.habit.domain
 
 import kotlinx.serialization.Serializable
-import java.time.LocalDateTime
 import java.util.UUID
 
 @Serializable
