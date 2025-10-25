@@ -1,7 +1,7 @@
 package com.habit.domain
 
 import kotlinx.serialization.Serializable
-import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Serializable
@@ -10,7 +10,7 @@ data class Habit(
     val icon: String,
     val title: String,
     val description: String,
-    val createdAt: SimpleDateFormat,
-    val modifiedAt: SimpleDateFormat,
+    val createdAt: String,
+    val modifiedAt: String,
 )
 

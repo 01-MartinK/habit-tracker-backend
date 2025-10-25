@@ -2,8 +2,7 @@ package com.habit.model
 
 import com.habit.domain.CreateHabitAction
 import com.habit.domain.Habit
-import java.text.SimpleDateFormat
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 class FakeHabitRepository : HabitRepository {
@@ -12,29 +11,29 @@ class FakeHabitRepository : HabitRepository {
             "person-running",
             "Workout",
             "6:00 - 2h",
-            SimpleDateFormat(LocalDate.now().toString()),
-            SimpleDateFormat(LocalDate.now().toString())
+            LocalDateTime.now().toString(),
+            LocalDateTime.now().toString()
         ),
         Habit(UUID.randomUUID(),
             "moon",
             "Sleep",
             "22:00 - 6:00",
-            SimpleDateFormat(LocalDate.now().toString()),
-            SimpleDateFormat(LocalDate.now().toString())
+            LocalDateTime.now().toString(),
+            LocalDateTime.now().toString()
         ),
         Habit(UUID.randomUUID(),
             "person-praying",
             "Yoga",
             "16:00 - 1h",
-            SimpleDateFormat(LocalDate.now().toString()),
-            SimpleDateFormat(LocalDate.now().toString())
+            LocalDateTime.now().toString(),
+            LocalDateTime.now().toString()
         ),
         Habit(UUID.randomUUID(),
             "person-running",
             "Mouth exercises",
             "8:00 - 10min",
-            SimpleDateFormat(LocalDate.now().toString()),
-            SimpleDateFormat(LocalDate.now().toString())
+            LocalDateTime.now().toString(),
+            LocalDateTime.now().toString()
         ),
     )
 
@@ -45,8 +44,8 @@ class FakeHabitRepository : HabitRepository {
             action.icon,
             action.title,
             action.description,
-            SimpleDateFormat(LocalDate.now().toString()),
-            SimpleDateFormat(LocalDate.now().toString())
+            LocalDateTime.now().toString(),
+            LocalDateTime.now().toString()
         )
 
         habits.add(habit)
@@ -64,7 +63,7 @@ class FakeHabitRepository : HabitRepository {
                 title = action.title,
                 description = action.description,
                 createdAt = oldHabit.createdAt,
-                modifiedAt = SimpleDateFormat(LocalDate.now().toString()),
+                modifiedAt = LocalDateTime.now().toString(),
             )
 
             habits.find { it.id == UUID.fromString(id) } == habit
