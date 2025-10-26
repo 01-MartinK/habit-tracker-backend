@@ -3,7 +3,7 @@ package com.habit.model
 import com.habit.domain.CreateHabitAction
 import com.habit.domain.Habit
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 class FakeHabitRepository : HabitRepository {
     private val habits = mutableListOf<Habit>(
@@ -37,9 +37,9 @@ class FakeHabitRepository : HabitRepository {
         ),
     )
 
-    override fun allHabits(): List<Habit> = habits
-    override fun getHabitById(id: String): Habit? = habits.find { it.id == UUID.fromString(id) }
-    override fun createHabit(action: CreateHabitAction): Habit {
+    override fun findAll(): List<Habit> = habits
+    override fun findById(id: String): Habit? = habits.find { it.id == UUID.fromString(id) }
+    override fun create(action: CreateHabitAction): Habit {
         val habit = Habit(UUID.randomUUID(),
             action.icon,
             action.title,
@@ -53,7 +53,7 @@ class FakeHabitRepository : HabitRepository {
         return habit
     }
 
-    override fun updateHabit(id: String, action: CreateHabitAction): Habit? {
+    override fun updateById(id: String, action: CreateHabitAction): Habit? {
         val oldHabit: Habit? = habits.find { it.id == UUID.fromString(id) }
 
         if (oldHabit != null) {
@@ -74,7 +74,7 @@ class FakeHabitRepository : HabitRepository {
         return null
     }
 
-    override fun deleteHabit(id: String): Boolean {
+    override fun deleteById(id: String): Boolean {
         return habits.removeIf { it.id == UUID.fromString(id) }
     }
 }

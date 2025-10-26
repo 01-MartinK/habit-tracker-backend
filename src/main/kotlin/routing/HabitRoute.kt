@@ -2,17 +2,17 @@ package com.habit.routing
 
 import com.habit.domain.toCreateAction
 import com.habit.model.FakeHabitRepository
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import io.ktor.server.request.*
-import io.ktor.server.routing.*
 import io.ktor.server.response.*
-import java.util.UUID
+import io.ktor.server.routing.*
+import java.util.*
 
 fun Route.habitRoute(
     fakeHabitRepository: FakeHabitRepository
 ) {
     get {
-        val habits = fakeHabitRepository.allHabits()
+        val habits = fakeHabitRepository.findAll()
 
         call.respond(
             message = habits
@@ -22,7 +22,7 @@ fun Route.habitRoute(
     get("/{id}") {
         val id: String = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
 
-        val habit = fakeHabitRepository.allHabits().find { it.id == UUID.fromString(id) } ?: return@get call.respond(
+        val habit = fakeHabitRepository.findAll().find { it.id == UUID.fromString(id) } ?: return@get call.respond(
             HttpStatusCode.NotFound
         )
 
@@ -37,7 +37,7 @@ fun Route.habitRoute(
         val action = params.toCreateAction() ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
-            message = fakeHabitRepository.createHabit(action)
+            message = fakeHabitRepository.create(action)
         )
     }
 
@@ -48,7 +48,7 @@ fun Route.habitRoute(
         if (id.isEmpty()) return@put call.respond(HttpStatusCode.BadRequest)
 
         val action = params.toCreateAction() ?: return@put call.respond(HttpStatusCode.BadRequest)
-        val habit = fakeHabitRepository.updateHabit(id, action) ?: return@put call.respond(HttpStatusCode.BadRequest)
+        val habit = fakeHabitRepository.updateById(id, action) ?: return@put call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
             message = habit
@@ -58,7 +58,7 @@ fun Route.habitRoute(
     delete("/{id}") {
         val id: String = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
         call.respond(
-            message = fakeHabitRepository.deleteHabit(id)
+            message = fakeHabitRepository.deleteById(id)
         )
     }
 }
