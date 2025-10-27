@@ -1,21 +1,12 @@
 package com.habit.domain
 
-import io.ktor.http.Parameters
 import kotlinx.serialization.Serializable
+import java.util.*
 
 @Serializable
 data class CreateHabitAction(
+    val id: UUID? = null,
     val icon: String,
     val title: String,
     val description: String,
     )
-
-fun Parameters.toCreateAction(): CreateHabitAction? {
-    if (this["icon"].isNullOrEmpty() || this["title"].isNullOrEmpty() || this["description"].isNullOrEmpty()) return null
-
-    return CreateHabitAction(
-        icon = this["icon"].toString(),
-        title = this["title"].toString(),
-        description = this["description"].toString()
-    )
-}

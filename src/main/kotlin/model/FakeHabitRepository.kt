@@ -40,7 +40,7 @@ class FakeHabitRepository : HabitRepository {
     override fun findAll(): List<Habit> = habits
     override fun findById(id: String): Habit? = habits.find { it.id == UUID.fromString(id) }
     override fun create(action: CreateHabitAction): Habit {
-        val habit = Habit(UUID.randomUUID(),
+        val habit = Habit(action.id ?: UUID.randomUUID(),
             action.icon,
             action.title,
             action.description,
