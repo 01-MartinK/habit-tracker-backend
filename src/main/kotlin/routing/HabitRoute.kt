@@ -1,6 +1,6 @@
 package com.habit.routing
 
-import com.habit.domain.toCreateAction
+import com.habit.domain.CreateHabitAction
 import com.habit.model.FakeHabitRepository
 import io.ktor.http.*
 import io.ktor.server.request.*
@@ -32,9 +32,7 @@ fun Route.habitRoute(
     }
 
     post {
-        val params = call.receiveParameters()
-
-        val action = params.toCreateAction() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val action = call.receive<CreateHabitAction>()
 
         call.respond(
             message = fakeHabitRepository.create(action)
@@ -42,12 +40,11 @@ fun Route.habitRoute(
     }
 
     put("/{id}") {
-        val params = call.receiveParameters()
+        val action = call.receive<CreateHabitAction>()
         val id: String = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
 
         if (id.isEmpty()) return@put call.respond(HttpStatusCode.BadRequest)
 
-        val action = params.toCreateAction() ?: return@put call.respond(HttpStatusCode.BadRequest)
         val habit = fakeHabitRepository.updateById(id, action) ?: return@put call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
