@@ -28,15 +28,17 @@ class HabitRouteTest {
     private val url = "/api/habits"
     private val objectMapper = ObjectMapper().registerKotlinModule()
     private val mockAction = CreateHabitAction(id = UUID.randomUUID(), icon = "person-floor", title = "Floor stretch", description = "Stretch on the floor")
-
-
-    @Test
-    fun `get all habits`() = testApplication {
+    private var configApplication: ApplicationTestBuilder.() -> Unit = {
         application {
             configureSerialization()
             configureHTTP()
             configureRouting(FakeHabitRepository())
         }
+    }
+
+    @Test
+    fun `get all habits`() = testApplication {
+        configApplication()
 
         client.get(url).apply {
             val response: String = call.response.body<String>()
@@ -53,11 +55,7 @@ class HabitRouteTest {
 
     @Test
     fun `create new habit`() = testApplication {
-        application {
-            configureSerialization()
-            configureHTTP()
-            configureRouting(FakeHabitRepository())
-        }
+        configApplication()
 
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
@@ -78,11 +76,7 @@ class HabitRouteTest {
 
     @Test
     fun `update habit`() = testApplication {
-        application {
-            configureSerialization()
-            configureHTTP()
-            configureRouting(FakeHabitRepository())
-        }
+        configApplication()
 
         var response = client.post(url) {
             contentType(ContentType.Application.Json)
@@ -115,11 +109,7 @@ class HabitRouteTest {
 
     @Test
     fun `delete habit by id`() = testApplication {
-        application {
-            configureSerialization()
-            configureHTTP()
-            configureRouting(FakeHabitRepository())
-        }
+        configApplication()
 
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
