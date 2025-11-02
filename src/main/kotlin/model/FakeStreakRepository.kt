@@ -18,7 +18,7 @@ class FakeStreakRepository : StreakRepository {
 
         streaks.add(streak)
 
-        return streak;
+        return streak
     }
 
     override fun update(date: String, newHabits: List<String>): Streak? {
