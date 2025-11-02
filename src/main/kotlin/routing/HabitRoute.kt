@@ -12,10 +12,8 @@ fun Route.habitRoute(
     fakeHabitRepository: FakeHabitRepository
 ) {
     get {
-        val habits = fakeHabitRepository.findAll()
-
         call.respond(
-            message = habits
+            message = fakeHabitRepository.findAll()
         )
     }
 
@@ -42,8 +40,6 @@ fun Route.habitRoute(
     put("/{id}") {
         val action = call.receive<CreateHabitAction>()
         val id: String = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
-
-        if (id.isEmpty()) return@put call.respond(HttpStatusCode.BadRequest)
 
         val habit = fakeHabitRepository.updateById(id, action) ?: return@put call.respond(HttpStatusCode.BadRequest)
 
