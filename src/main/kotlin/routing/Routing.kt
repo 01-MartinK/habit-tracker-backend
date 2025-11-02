@@ -1,22 +1,26 @@
 package com.habit.routing
 
 import com.habit.model.FakeHabitRepository
-import io.ktor.http.HttpStatusCode
+import com.habit.model.FakeStreakRepository
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
-import io.ktor.util.reflect.typeInfo
+import io.ktor.util.reflect.*
 
-fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository) {
+fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository, fakeStreakRepository: FakeStreakRepository) {
     routing {
         route("/api") {
             route("/habits") {
                 habitRoute(fakeHabitRepository)
             }
 
+            route("/streaks") {
+                streakRoute(fakeStreakRepository)
+            }
+
             get("/healthcheck") {
                 call.respond(
-                    message = HttpStatusCode.OK,
-                    typeInfo = typeInfo<String>()
+                    message = HttpStatusCode.OK, typeInfo = typeInfo<String>()
                 )
             }
         }

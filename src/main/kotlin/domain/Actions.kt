@@ -10,3 +10,8 @@ data class CreateHabitAction(
     val title: String,
     val description: String,
     )
+
+@Serializable
+data class UpdateStreakAction(
+    val habits: List<String>
+)
