@@ -17,7 +17,8 @@ dependencies {
     implementation(libs.ktor.server.default.headers)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.logback.classic)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
-    testImplementation("io.mockk:mockk:1.14.6")
+    testImplementation(libs.mockk)
 }
