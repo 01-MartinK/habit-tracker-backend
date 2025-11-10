@@ -1,13 +1,13 @@
 package com.habit.routing
 
+import com.habit.model.FakeDateInfoRepository
 import com.habit.model.FakeHabitRepository
-import com.habit.model.FakeStreakRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.util.reflect.*
 
-fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository, fakeStreakRepository: FakeStreakRepository) {
+fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository, fakeDateInfoRepository: FakeDateInfoRepository) {
     routing {
         route("/api") {
             route("/habits") {
@@ -15,7 +15,7 @@ fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository, fakeS
             }
 
             route("/streaks") {
-                streakRoute(fakeStreakRepository)
+                streakRoute(fakeDateInfoRepository)
             }
 
             get("/healthcheck") {
