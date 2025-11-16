@@ -8,11 +8,11 @@ class FakeDateInfoRepository : DateInfoRepository {
 
     override fun findAll(): List<DateInfo> = dateInfos
 
-    override fun findByDate(date: String): DateInfo? = dateInfos.find { it.id == UUID.fromString(date) }
+    override fun findByDate(date: String): DateInfo? = dateInfos.find { it.id == UUID.nameUUIDFromBytes(date.encodeToByteArray()) }
 
     override fun create(date: String): DateInfo {
         val dateInfo = DateInfo(
-            id = UUID.fromString(date),
+            id = UUID.nameUUIDFromBytes(date.encodeToByteArray()),
             completedHabits = emptyList(),
             steps = 0,
         )
@@ -23,14 +23,14 @@ class FakeDateInfoRepository : DateInfoRepository {
     }
 
     override fun update(date: String, newHabits: List<String>): DateInfo? {
-        val streak = dateInfos.find { it.id == UUID.fromString(date) }
+        val dateInfo = dateInfos.find { it.id == UUID.nameUUIDFromBytes(date.encodeToByteArray()) }
 
-        if (streak != null) {
-            streak.completedHabits = newHabits
+        if (dateInfo != null) {
+            dateInfo.completedHabits = newHabits
         }
 
-        return streak
+        return dateInfo
     }
 
-    override fun delete(date: String): Boolean = dateInfos.removeIf { it.id == UUID.fromString(date) }
+    override fun delete(date: String): Boolean = dateInfos.removeIf { it.id == UUID.nameUUIDFromBytes(date.encodeToByteArray()) }
 }

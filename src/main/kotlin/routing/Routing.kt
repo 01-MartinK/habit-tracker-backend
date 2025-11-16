@@ -14,8 +14,8 @@ fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository, fakeD
                 habitRoute(fakeHabitRepository)
             }
 
-            route("/streaks") {
-                streakRoute(fakeDateInfoRepository)
+            route("/date-info") {
+                dateInfoRoute(fakeDateInfoRepository)
             }
 
             get("/healthcheck") {

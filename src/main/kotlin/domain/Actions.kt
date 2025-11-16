@@ -12,6 +12,6 @@ data class CreateHabitAction(
     )
 
 @Serializable
-data class UpdateStreakAction(
+data class UpdateDateInfoAction(
     val habits: List<String>
 )

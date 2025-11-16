@@ -1,13 +1,13 @@
 package com.habit.routing
 
-import com.habit.domain.UpdateStreakAction
+import com.habit.domain.UpdateDateInfoAction
 import com.habit.model.FakeDateInfoRepository
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.streakRoute(
+fun Route.dateInfoRoute(
     fakeDateInfoRepository: FakeDateInfoRepository
 ) {
     get {
@@ -19,10 +19,10 @@ fun Route.streakRoute(
     get("/{id}") {
         val id: String = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
 
-        val streak = fakeDateInfoRepository.findByDate(id) ?: call.respond(HttpStatusCode.BadRequest)
+        val dateInfo = fakeDateInfoRepository.findByDate(id) ?: call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
-            message = streak
+            message = dateInfo
         )
     }
 
@@ -36,12 +36,12 @@ fun Route.streakRoute(
 
     put("/{id}") {
         val id: String = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
-        val action = call.receive<UpdateStreakAction>()
+        val action = call.receive<UpdateDateInfoAction>()
 
-        val streak = fakeDateInfoRepository.update(id, action.habits) ?: return@put call.respond(HttpStatusCode.BadRequest)
+        val dateInfo = fakeDateInfoRepository.update(id, action.habits) ?: return@put call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
-            message = streak
+            message = dateInfo
         )
     }
 
