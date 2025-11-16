@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.habit.domain.CreateHabitAction
 import com.habit.domain.Habit
+import com.habit.model.FakeDateInfoRepository
 import com.habit.model.FakeHabitRepository
 import com.habit.routing.configureRouting
 import io.ktor.client.call.*
@@ -15,25 +16,30 @@ import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/*
-Tests needed
-- Get
-- Get ID
-- Post
-- Put
-- Delete
- */
-
 class HabitRouteTest {
     private val url = "/api/habits"
     private val objectMapper = ObjectMapper().registerKotlinModule()
-    private val mockAction = CreateHabitAction(id = UUID.randomUUID(), icon = "person-floor", title = "Floor stretch", description = "Stretch on the floor")
+    private val mockAction = CreateHabitAction(
+        id = UUID.randomUUID(),
+        icon = "person-floor",
+        title = "Floor stretch",
+        description = "Stretch on the floor"
+    )
     private var configApplication: ApplicationTestBuilder.() -> Unit = {
         application {
             configureSerialization()
             configureHTTP()
-            configureRouting(FakeHabitRepository())
+            configureRouting(FakeHabitRepository(), FakeDateInfoRepository())
         }
+    }
+
+    fun toHabit(body: String): Habit {
+        return objectMapper.readValue(body, Habit::class.java)
+    }
+
+    fun toHabitsList(body: String): List<Habit> {
+        val hashMap = objectMapper.readValue(body, List::class.java)
+        return hashMap.map { objectMapper.convertValue(it, Habit::class.java) }
     }
 
     @Test
@@ -43,7 +49,7 @@ class HabitRouteTest {
         client.get(url).apply {
             val response: String = call.response.body<String>()
             try {
-                val habits: List<*> = objectMapper.readValue(response, List::class.java)
+                val habits: List<Habit> = toHabitsList(response)
 
                 assertEquals(HttpStatusCode.OK, call.response.status)
                 assertEquals(false, habits.isEmpty())
@@ -66,7 +72,7 @@ class HabitRouteTest {
             )
         }
 
-        val habit: Habit = objectMapper.readValue(response.body<String>(), Habit::class.java)
+        val habit: Habit = toHabit(response.body<String>())
 
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals(mockAction.icon, habit.icon)
@@ -87,12 +93,12 @@ class HabitRouteTest {
             )
         }
 
-        var habit: Habit = objectMapper.readValue(response.body<String>(), Habit::class.java)
+        var habit: Habit = toHabit(response.body<String>())
 
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals(mockAction.id, habit.id)
 
-        response = client.put(url+"/"+mockAction.id) {
+        response = client.put(url + "/" + mockAction.id) {
             contentType(ContentType.Application.Json)
             setBody(
                 objectMapper.writeValueAsString(
@@ -101,7 +107,7 @@ class HabitRouteTest {
             )
         }
 
-        habit = objectMapper.readValue(response.body<String>(), Habit::class.java)
+        habit = toHabit(response.body<String>())
 
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("Standing stretch", habit.title)
@@ -120,7 +126,7 @@ class HabitRouteTest {
             )
         }
 
-        val habit: Habit = objectMapper.readValue(response.body<String>(), Habit::class.java)
+        val habit: Habit = toHabit(response.body<String>())
 
         assertEquals(HttpStatusCode.OK, response.status)
 

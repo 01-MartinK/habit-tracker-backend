@@ -7,6 +7,7 @@ group = "com.habit"
 version = "0.0.5"
 
 application {
+    applicationDefaultJvmArgs = listOf("--enable-native-access=ALL-UNNAMED")
     mainClass = "io.ktor.server.netty.EngineMain"
 }
 
@@ -17,7 +18,6 @@ dependencies {
     implementation(libs.ktor.server.default.headers)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.config.yaml)
-    implementation(libs.logback.classic)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.mockk)

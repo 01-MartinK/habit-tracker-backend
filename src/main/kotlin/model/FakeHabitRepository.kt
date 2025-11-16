@@ -65,7 +65,6 @@ class FakeHabitRepository : HabitRepository {
                 createdAt = oldHabit.createdAt,
                 modifiedAt = LocalDateTime.now().toString(),
             )
-
             habits.find { it.id == UUID.fromString(id) } == habit
 
             return habit
