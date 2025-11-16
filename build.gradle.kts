@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.ktor.server.default.headers)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.slf4j.logger)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.mockk)
