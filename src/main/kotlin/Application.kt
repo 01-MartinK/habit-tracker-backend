@@ -1,8 +1,8 @@
 package com.habit
 
-import com.habit.model.FakeDateInfoRepository
-import com.habit.model.FakeHabitRepository
 import com.habit.routing.configureRouting
+import com.habit.services.DateInfoService
+import com.habit.services.HabitService
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -10,10 +10,9 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    val fakeHabitRepository = FakeHabitRepository()
-    val fakeDateInfoRepository = FakeDateInfoRepository()
+    DatabaseFactory.init()
 
     configureSerialization()
     configureHTTP()
-    configureRouting(fakeHabitRepository, fakeDateInfoRepository)
+    configureRouting(HabitService(), DateInfoService())
 }

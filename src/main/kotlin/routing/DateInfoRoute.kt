@@ -1,25 +1,25 @@
 package com.habit.routing
 
 import com.habit.domain.UpdateDateInfoAction
-import com.habit.model.FakeDateInfoRepository
+import com.habit.services.DateInfoService
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.dateInfoRoute(
-    fakeDateInfoRepository: FakeDateInfoRepository
+    dateInfoService: DateInfoService
 ) {
     get {
         call.respond(
-            message = fakeDateInfoRepository.findAll()
+            message = dateInfoService.findAll()
         )
     }
 
     get("/{id}") {
         val id: String = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
 
-        val dateInfo = fakeDateInfoRepository.findByDate(id) ?: call.respond(HttpStatusCode.BadRequest)
+        val dateInfo = dateInfoService.findByDate(id) ?: call.respond(HttpStatusCode.NotFound)
 
         call.respond(
             message = dateInfo
@@ -30,7 +30,7 @@ fun Route.dateInfoRoute(
         val id = call.parameters["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         call.respond(
-            message = fakeDateInfoRepository.create(id)
+            message = dateInfoService.create(id)
         )
     }
 
@@ -38,7 +38,7 @@ fun Route.dateInfoRoute(
         val id: String = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
         val action = call.receive<UpdateDateInfoAction>()
 
-        val dateInfo = fakeDateInfoRepository.update(id, action.habits) ?: return@put call.respond(HttpStatusCode.BadRequest)
+        val dateInfo = dateInfoService.update(id, action.habits)
 
         call.respond(
             message = dateInfo
@@ -48,7 +48,7 @@ fun Route.dateInfoRoute(
     delete("/{id}") {
         val id: String = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
         call.respond(
-            message = fakeDateInfoRepository.delete(id)
+            message = dateInfoService.delete(id)
         )
     }
 }

@@ -1,21 +1,21 @@
 package com.habit.routing
 
-import com.habit.model.FakeDateInfoRepository
-import com.habit.model.FakeHabitRepository
+import com.habit.services.DateInfoService
+import com.habit.services.HabitService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.util.reflect.*
 
-fun Application.configureRouting(fakeHabitRepository: FakeHabitRepository, fakeDateInfoRepository: FakeDateInfoRepository) {
+fun Application.configureRouting(habitService: HabitService, dateInfoService: DateInfoService) {
     routing {
         route("/api") {
             route("/habits") {
-                habitRoute(fakeHabitRepository)
+                habitRoute(habitService)
             }
 
             route("/date-info") {
-                dateInfoRoute(fakeDateInfoRepository)
+                dateInfoRoute(dateInfoService)
             }
 
             get("/healthcheck") {

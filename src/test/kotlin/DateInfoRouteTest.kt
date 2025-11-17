@@ -5,8 +5,6 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.habit.domain.DateInfo
 import com.habit.domain.Habit
 import com.habit.domain.UpdateDateInfoAction
-import com.habit.model.FakeDateInfoRepository
-import com.habit.model.FakeHabitRepository
 import com.habit.routing.configureRouting
 import io.ktor.client.call.*
 import io.ktor.client.request.*

@@ -1,26 +1,25 @@
 package com.habit.routing
 
 import com.habit.domain.CreateHabitAction
-import com.habit.model.FakeHabitRepository
+import com.habit.services.HabitService
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.util.*
 
 fun Route.habitRoute(
-    fakeHabitRepository: FakeHabitRepository
+    habitService: HabitService
 ) {
     get {
         call.respond(
-            message = fakeHabitRepository.findAll()
+            message = habitService.findAll()
         )
     }
 
     get("/{id}") {
-        val id: String = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+        val id: Int = call.parameters["id"]?.toInt() ?: return@get call.respond(HttpStatusCode.BadRequest)
 
-        val habit = fakeHabitRepository.findAll().find { it.id == UUID.fromString(id) } ?: return@get call.respond(
+        val habit = habitService.findById(id) ?: return@get call.respond(
             HttpStatusCode.NotFound
         )
 
@@ -33,15 +32,15 @@ fun Route.habitRoute(
         val action = call.receive<CreateHabitAction>()
 
         call.respond(
-            message = fakeHabitRepository.create(action)
+            message = habitService.create(action)
         )
     }
 
     put("/{id}") {
         val action = call.receive<CreateHabitAction>()
-        val id: String = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest)
+        val id: Int = call.parameters["id"]?.toInt() ?: return@put call.respond(HttpStatusCode.BadRequest)
 
-        val habit = fakeHabitRepository.updateById(id, action) ?: return@put call.respond(HttpStatusCode.BadRequest)
+        val habit = habitService.updateById(id, action)
 
         call.respond(
             message = habit
@@ -49,9 +48,9 @@ fun Route.habitRoute(
     }
 
     delete("/{id}") {
-        val id: String = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+        val id: Int = call.parameters["id"]?.toInt() ?: return@delete call.respond(HttpStatusCode.BadRequest)
         call.respond(
-            message = fakeHabitRepository.deleteById(id)
+            message = habitService.deleteById(id)
         )
     }
 }
